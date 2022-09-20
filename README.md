@@ -13,17 +13,21 @@ let newBlog = 	{
 	}
 	
 // insert the blog list
+
 db.blogs.insertMany(blogs)
 
 // insert the new blog	
+
 db.blogs.insertOne(newBlog)
 
 // find a blog by the author
+
 db.blogs.find({
     author: "Alfred Davis"
 })
 
 // find all blogs with objectId greater than 5
+
 db.blogs.find( {
     objectId: {
         $gt: 5
@@ -31,6 +35,7 @@ db.blogs.find( {
 })
 
 // find all blogs created after april 1, 2022
+
 db.blogs.find({
     createdAt: {
         $gt: ISODate('2022-04-01')
@@ -38,17 +43,20 @@ db.blogs.find({
 })
 
 // find all blogs where lastModified does not exist
+
 db.blogs.find({ lastModified : {$exists:false}})
 
-// find all blogs where lastModified does not exist
+// find all blogs where lastModified does not exist 
+
 db.blogs.find({createdAt : {$type: "date"}})
 
 // find all blogs where lastModified does not exist and createdAt type == date
 db.blogs.find({ lastModified : {$exists:false}, createdAt : {$type: "date"} })
 
 // find a blog using specific phrase using regex in the text
+
 db.blogs.find({
-    "title": {$regex: /new/}
+    "text": {$regex: /new/}
 })
 
 // find all blogs that have "qui" in the categories array
