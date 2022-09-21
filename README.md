@@ -51,6 +51,7 @@ db.blogs.find({ lastModified : {$exists:false}})
 db.blogs.find({createdAt : {$type: "date"}})
 
 // find all blogs where lastModified does not exist and createdAt type == date
+
 db.blogs.find({ lastModified : {$exists:false}, createdAt : {$type: "date"} })
 
 // find a blog using specific phrase using regex in the text
@@ -64,3 +65,46 @@ db.blogs.find({
 db.blogs.find({
     categories : {$regex: /qui/}
 })
+
+
+
+// 	- Find all blogs in which the lastModified does not exist and set it
+
+db.blogs.updateMany({
+    lastModified: {$exists: false}
+},{$set:{
+    lastModified: new Date()
+}})
+
+// 	- From now on, all the following queries should update lastModified to be the current datetime 
+
+
+// 	- Find all blogs created after May 2022 and add "lorem" as a new category in the categories array
+
+db.blogs.updateMany({
+    createdAt: {$gt: ISODate('2022-05-31')}
+}, {
+    $push: {categories: 'lorem'}, 
+    $set: {lastModified: new Date()}
+    
+})
+
+
+// 	- Find all blogs that have the category "voluptas" and pull "voluptas" from the categories
+
+db.blogs.updateMany({
+    categories: { $in: ["voluptas"] }
+},{
+    $pull: {categories: 'voluptas'},
+    $set: {lastModified: new Date()}
+})
+
+
+
+// 	- Find all blogs with "corrupti" in the categories and delete those blogs
+
+// db.blogs.deleteMany({
+//     categories: {$in: ['corrupti']}
+// })
+ 
+ 
