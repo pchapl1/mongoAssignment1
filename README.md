@@ -103,8 +103,8 @@ db.blogs.updateMany({
 
 // 	- Find all blogs with "corrupti" in the categories and delete those blogs
 
-// db.blogs.deleteMany({
-//     categories: {$in: ['corrupti']}
-// })
+db.blogs.deleteMany({
+     categories: {$in: ['corrupti']}
+})
  
  
